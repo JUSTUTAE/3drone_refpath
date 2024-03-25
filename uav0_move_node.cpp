@@ -54,7 +54,6 @@ public:
     {
         ros::Rate rate(20.0);
         geometry_msgs::PoseStamped pose0;
-
         pose0.pose.position.x = 0;
         pose0.pose.position.y = 0;
         pose0.pose.position.z = 2;
@@ -72,7 +71,7 @@ public:
         {
             ros::spinOnce();
             rate.sleep();
-        }
+        } 
 
         mavros_msgs::SetMode offb_set_mode;
         offb_set_mode.request.custom_mode = "OFFBOARD";
@@ -103,21 +102,10 @@ public:
                     last_request = ros::Time::now();
                 }
             }
-
-            if(current_pose_msg.pose.position.z<2)
-            {
-
-                pose0.pose.position.x = 0;
-                pose0.pose.position.y = 0;
-                pose0.pose.position.z = 2;
-            }
-            else
-            {
                 //ref_path_msg.header.frame_id = "map";
-                pose0.pose.position.x = ref_path_msg.poses[0].pose.position.x;
-                pose0.pose.position.y = ref_path_msg.poses[0].pose.position.y;
-                pose0.pose.position.z = 2;
-            }
+            pose0.pose.position.x = ref_path_msg.poses[0].pose.position.x;
+            pose0.pose.position.y = ref_path_msg.poses[0].pose.position.y;
+            pose0.pose.position.z = ref_path_msg.poses[0].pose.position.z;
             
             set_point_pub.publish(pose0);
 
