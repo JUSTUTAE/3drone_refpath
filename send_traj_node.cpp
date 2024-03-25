@@ -101,12 +101,11 @@ public:
 
         while (ros::ok()) 
         {
-
-            if (current_pose_0.pose.position.z > 1.9) 
+            if (current_pose_0.pose.position.z >= 2.0) 
             {
                 for(int i = 0; i < 10; ++i)
                 {
-                    if (x_r < 15) 
+                    if (temp_x < 15) 
                     {
                         x_r = temp_x + 0.05 * i;
                         y_r = 3 * sin(2 * M_PI / 5 * x_r);
@@ -117,15 +116,15 @@ public:
                         }
                         refpoint0.pose.position.x=x_r;
                         refpoint0.pose.position.y=y_r;
-                        refpoint0.pose.position.z=2;
+                        refpoint0.pose.position.z=2.0;
 
                         refpoint1.pose.position.x=x_r-2.5;
                         refpoint1.pose.position.y=y_r-2+5;
-                        refpoint1.pose.position.z=2;
+                        refpoint1.pose.position.z=2.0;
 
                         refpoint2.pose.position.x=x_r-2.5;
                         refpoint2.pose.position.y=y_r+2-5;
-                        refpoint2.pose.position.z=2;
+                        refpoint2.pose.position.z=2.0;
 
                         ref_path_0_msg.header.stamp = ros::Time::now();
                         ref_path_0_msg.poses.emplace_back(refpoint0);
@@ -137,6 +136,29 @@ public:
                         ref_path_2_msg.poses.emplace_back(refpoint2);
                     }
                 }
+            }
+            else
+            {
+                refpoint0.pose.position.x=x_r;
+                refpoint0.pose.position.y=y_r;
+                refpoint0.pose.position.z=2.0;
+
+                refpoint1.pose.position.x=x_r-2.5;
+                refpoint1.pose.position.y=y_r-2+5;
+                refpoint1.pose.position.z=2.0;
+
+                refpoint2.pose.position.x=x_r-2.5;
+                refpoint2.pose.position.y=y_r+2-5;
+                refpoint2.pose.position.z=2.0;
+
+                ref_path_0_msg.header.stamp = ros::Time::now();
+                ref_path_0_msg.poses.emplace_back(refpoint0);
+
+                ref_path_1_msg.header.stamp = ros::Time::now();
+                ref_path_1_msg.poses.emplace_back(refpoint1);
+
+                ref_path_2_msg.header.stamp = ros::Time::now();
+                ref_path_2_msg.poses.emplace_back(refpoint2);
             }
             gpose1.pose.position.x=current_pose_1.pose.position.x;
             gpose1.pose.position.y=current_pose_1.pose.position.y+5;
