@@ -103,21 +103,10 @@ public:
                     last_request = ros::Time::now();
                 }
             }
-
-            if(current_pose_msg.pose.position.z<2)
-            {
-
-                pose2.pose.position.x = 0;
-                pose2.pose.position.y = 0;
-                pose2.pose.position.z = 2;
-            }
-            else
-            {
                 //ref_path_msg.header.frame_id = "map";
-                pose2.pose.position.x = ref_path_msg.poses[0].pose.position.x;
-                pose2.pose.position.y = ref_path_msg.poses[0].pose.position.y+5;
-                pose2.pose.position.z = 2;
-            }
+            pose2.pose.position.x = ref_path_msg.poses[0].pose.position.x;
+            pose2.pose.position.y = ref_path_msg.poses[0].pose.position.y+5;
+            pose2.pose.position.z = ref_path_msg.poses[0].pose.position.z;
             
             set_point_pub.publish(pose2);
 
